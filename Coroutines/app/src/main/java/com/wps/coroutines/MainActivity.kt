@@ -2,6 +2,8 @@ package com.wps.coroutines
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.whenStarted
 import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity(){
@@ -50,6 +52,12 @@ class MainActivity : AppCompatActivity(){
         }
 
 
+
+        lifecycleScope.launch(Dispatchers.Main) {
+            whenStarted {
+                // The block inside will run only when Lifecycle is at least STARTED.
+            }
+        }
     }
 
 
