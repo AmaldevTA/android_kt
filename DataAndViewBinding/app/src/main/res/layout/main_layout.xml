@@ -17,6 +17,7 @@
 
         <variable name="map" type="Map&lt;String, String>"/>
         <variable name="key" type="String"/>
+
     </data>
 
     <LinearLayout
@@ -30,8 +31,15 @@
             android:id="@+id/message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{viewModel.count > 0 ? View.GONE : View.VISIBLE}"
+            android:visibility="@{viewModel.count > 5 ? View.GONE : View.VISIBLE}"
             android:text="@{viewModel.message}" />
+
+        <EditText
+            android:id="@+id/messageContent0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@={viewModel.name}"/>
 
         <TextView
             android:id="@+id/messageContent1"

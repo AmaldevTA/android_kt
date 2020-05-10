@@ -19,7 +19,7 @@ class MainAdapter(private val list: List<String>) : RecyclerView.Adapter<MainAda
     override fun getItemCount() = list.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        holder.binding.executePendingBindings()
     }
 
     class ViewHolder(val binding: MainListItemBinding) : RecyclerView.ViewHolder(binding.root)

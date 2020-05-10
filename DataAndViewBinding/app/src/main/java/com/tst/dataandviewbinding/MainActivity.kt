@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
 
         val viewModel : MainViewModel by viewModels()
         binding.viewModel = viewModel
+        viewModel.name.set("UserName")
 
     }
 }
