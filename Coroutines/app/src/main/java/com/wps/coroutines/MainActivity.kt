@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
 import kotlinx.coroutines.*
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity(){
 
@@ -13,6 +14,31 @@ class MainActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val job =   CoroutineScope(Dispatchers.IO).launch {
+            try {
+                repeat(1000) { i ->
+                    println("job: I'm sleeping $i ...")
+                    delay(500L)
+                }
+            } finally {
+                withContext(NonCancellable) {
+                    println("job: I'm running finally")
+                    delay(1000L)
+                    println("job: And I've just delayed for 1 sec because I'm non-cancellable")
+                }
+            }
+        }
+
+        MainScope().launch(Dispatchers.Main){
+            delay(3500)
+            println("main: I'm tired of waiting!")
+            job.cancel() // cancels the job
+            println("main: Now I can quit.")
+        }
+
+    }
+
+    private fun startCoroutines(){
 
         GlobalScope.launch(Dispatchers.Main) {
             val userOne = async(Dispatchers.IO) {
@@ -26,7 +52,6 @@ class MainActivity : AppCompatActivity(){
         }
 
 
-
         CoroutineScope(Dispatchers.IO).launch{
             val res =  fetchUser()
             withContext(Dispatchers.Main) {
@@ -34,7 +59,6 @@ class MainActivity : AppCompatActivity(){
             }
             saveUser(res)
         }
-
 
 
         MainScope().launch(Dispatchers.IO){
@@ -50,7 +74,6 @@ class MainActivity : AppCompatActivity(){
             val res = fetchOneUser()
             showUser(res)
         }
-
 
 
         lifecycleScope.launch(Dispatchers.Main) {
