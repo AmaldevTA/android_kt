@@ -1,10 +1,8 @@
 package com.aml.room
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.room.Room
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.aml.room.database.AppDatabase
 import com.aml.room.database.entity.User
@@ -16,15 +14,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 class MainViewModel(app: Application) : AndroidViewModel(app) {
-    val db = Room.databaseBuilder(app, AppDatabase::class.java, "app_database")
-        .build()
+    private val db = AppDatabase.getDatabase(app)
 
     suspend fun addDummy() = withContext(Dispatchers.IO) {
         val list = mutableListOf<User>()
-        list.add(User(1, "John", 54))
-        list.add(User(2, "Jesus", 25))
-        list.add(User(3, "Mathew", 37))
-        list.add(User(4, "Gabriel", 44))
+        list.add(User(5, "John", 54, 75.2))
+        list.add(User(6, "Jesus", 25, 54.3))
+        list.add(User(7, "Mathew", 37, 65.2))
+        list.add(User(8, "Gabriel", 44, 44.5))
         db.userDao().insertAll(list)
     }
 

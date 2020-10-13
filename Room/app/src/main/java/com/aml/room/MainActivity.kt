@@ -5,14 +5,16 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import io.reactivex.rxjava3.functions.Consumer
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
+
     private val viewModel by viewModels<MainViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -22,19 +24,29 @@ class MainActivity : AppCompatActivity() {
             addDummy()
         }
 
-        viewModel.getAllLive().observe(this, Observer {
-           // count.text = "Row count ${it.size}"
+
+        viewModel.getAllLive().observe(this, {
+            count.text = "Row count ${it.size}"
         })
+
 
         lifecycleScope.launch{
             viewModel.getAllFlow().collect {
-                //count.text = "Row count ${it.size}"
+                count.text = "Row count ${it.size}"
             }
         }
 
-        viewModel.getAllFlowable(Consumer {
-            //count.text = "Row count ${it.size}"
-        })
+
+        viewModel.getAllFlow()
+            .onEach {
+                count.text = "Row count ${it.size}"
+            }
+            .launchIn(lifecycleScope)
+
+
+        viewModel.getAllFlowable {
+            count.text = "Row count ${it.size}"
+        }
 
 
         lifecycleScope.launch{

@@ -6,4 +6,8 @@ class ProfileRepo @Inject constructor(
     private val localDataSource: ProfileLocalDataSource,
     private val remoteDataSource: ProfileRemoteDataSource
 ) {
+    fun testRepo(){
+        println("<<<>>> $localDataSource")
+        println("<<<>>> $remoteDataSource")
+    }
 }

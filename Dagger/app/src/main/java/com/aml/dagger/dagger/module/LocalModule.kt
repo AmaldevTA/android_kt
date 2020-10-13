@@ -8,12 +8,12 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-@Module(includes = [ContextModule::class])
+@Module
 object LocalModule {
 
     @Singleton
     @Provides
-    fun getAppDatabase( context: Context): AppDatabase {
+    fun getAppDatabase(context: Context): AppDatabase {
         return Room.databaseBuilder(context, AppDatabase::class.java, "app_database")
             .build()
     }
