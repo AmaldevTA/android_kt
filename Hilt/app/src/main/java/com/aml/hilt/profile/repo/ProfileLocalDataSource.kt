@@ -6,5 +6,12 @@ import javax.inject.Inject
 
 class ProfileLocalDataSource @Inject constructor(
     private val appDatabase: AppDatabase,
-    private val preferences: SharedPreferences){
+    private val preferences: SharedPreferences
+) {
+
+    fun printReferences() {
+        println("<<<>>>  $appDatabase")
+        println("<<<>>>  $preferences")
+    }
+
 }

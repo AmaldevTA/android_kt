@@ -5,5 +5,9 @@ import javax.inject.Inject
 
 class ProfileRemoteDataSource @Inject constructor(
     private val retrofitService: RetrofitService
-){
+) {
+
+    fun printReferences() {
+        println("<<<>>>  $retrofitService")
+    }
 }

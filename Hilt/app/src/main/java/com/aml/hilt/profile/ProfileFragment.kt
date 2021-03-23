@@ -30,8 +30,10 @@ class ProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = inflate(inflater, R.layout.profile_fragment, container, false)
+
+        viewModel.printReferences()
 
         return binding.root
     }
